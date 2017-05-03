@@ -56,16 +56,17 @@ namespace CheckIn.Controllers
         {
             if (ModelState.IsValid)
             {
-                sendEmail(userCheckIn);
                 try
                 {
                     db.UserCheckIns.Add(userCheckIn);
                     db.SaveChanges();
+                    sendEmail(userCheckIn);
                 }
                 catch (Exception e)
                 {
                     ModelState.AddModelError("Key already exists.", e);
                 }
+                
                 return RedirectToAction("PostPage");
             }
 
@@ -79,7 +80,7 @@ namespace CheckIn.Controllers
             mailMessage.From = new MailAddress("noreply@checkinweb.ca");
             mailMessage.To.Add(userCheckIn.email);
             mailMessage.Subject = "You've been checked in!";
-            mailMessage.Body = "Your Checkin ID is " + userCheckIn.email;
+            mailMessage.Body = "Your Checkin ID is " + userCheckIn.ID;
 
             SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587);
             smtp.DeliveryMethod = SmtpDeliveryMethod.Network;

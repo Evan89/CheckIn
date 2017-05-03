@@ -160,6 +160,14 @@
     <Compile Include="Migrations\201705030249032_email.Designer.cs">
       <DependentUpon>201705030249032_email.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201705030341258_emailtest.cs" />
+    <Compile Include="Migrations\201705030341258_emailtest.Designer.cs">
+      <DependentUpon>201705030341258_emailtest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705030354564_emailtest1.cs" />
+    <Compile Include="Migrations\201705030354564_emailtest1.Designer.cs">
+      <DependentUpon>201705030354564_emailtest1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\CheckInContext.cs" />
     <Compile Include="Models\UserCheckIn.cs" />
@@ -233,6 +241,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201705030249032_email.resx">
       <DependentUpon>201705030249032_email.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705030341258_emailtest.resx">
+      <DependentUpon>201705030341258_emailtest.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705030354564_emailtest1.resx">
+      <DependentUpon>201705030354564_emailtest1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

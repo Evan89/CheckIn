@@ -9,8 +9,8 @@ namespace CheckIn.Models
     public class UserCheckIn
     {
         
-        
-        //public int ID { get; set; }
+        [Key]
+        public int ID { get; set; }
         
         [Required(ErrorMessage = "First name is required.")]
         [StringLength(20)]
@@ -27,7 +27,7 @@ namespace CheckIn.Models
         [RegularExpression(@"^\(?[\d]{3}\)?[\s-]?[\d]{3}[\s-]?[\d]{4}$", ErrorMessage = "Invalid format. Please enter valid phone number.")]
         public string telNum { get; set; }
 
-        [Key]
+        
         [Required(ErrorMessage = "Email address is required.")]
         [DataType(DataType.EmailAddress)]
         public string email { get; set; }
