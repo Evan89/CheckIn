@@ -80,7 +80,24 @@ namespace CheckIn.Controllers
             mailMessage.From = new MailAddress("noreply@checkinweb.ca");
             mailMessage.To.Add(userCheckIn.email);
             mailMessage.Subject = "You've been checked in!";
-            mailMessage.Body = "Your Checkin ID is " + userCheckIn.ID;
+            mailMessage.IsBodyHtml = true;
+            mailMessage.Body = "Hello " + userCheckIn.firstName + "! <br/> <br/>" +
+                "You've checked into SafetyLineLoneWorker's free check-in web app. Here are your check-in details.<br/><br/>" +
+                "<table>" +
+                    "<tr>" +
+                        "<td>Full Name</td>" +
+                        "<td>" + userCheckIn.firstName + " "+ userCheckIn.lastName+"</td>" +
+                    "</tr> " +
+                    "<tr>" +
+                        "<td>Emergency contact</td>" +
+                        "<td>" + userCheckIn.contactEmail + "</td>" +
+                    "</tr> " +
+                    "<tr>" +
+                        "<td>Return time</td>" +
+                        "<td>" + userCheckIn.returnTime + "</td>" +
+                    "</tr> " +
+                "</table> ";
+            //mailMessage.IsBodyHtml = true;
 
             SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587);
             smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
