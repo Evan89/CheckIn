@@ -47,5 +47,6 @@ namespace CheckIn.Models
         [DataType(DataType.MultilineText)]
         public string message { get; set; }
        
+        public int secNum { get; set; }
     }
 }

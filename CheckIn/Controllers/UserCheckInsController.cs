@@ -58,6 +58,7 @@ namespace CheckIn.Controllers
             {
                 try
                 {
+                    userCheckIn.secNum = new Random().Next(1, 1000000);
                     db.UserCheckIns.Add(userCheckIn);
                     db.SaveChanges();
                     sendEmail(userCheckIn);
@@ -142,14 +143,18 @@ namespace CheckIn.Controllers
         }
 
         // GET: UserCheckIns/Delete/5
-        public ActionResult Delete(int? id)
+        public ActionResult Delete(int? id, int? sec)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            if (sec == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
             UserCheckIn userCheckIn = db.UserCheckIns.Find(id);
-            if (userCheckIn == null)
+            if (userCheckIn == null || sec!=(userCheckIn.secNum))
             {
                 return HttpNotFound();
             }

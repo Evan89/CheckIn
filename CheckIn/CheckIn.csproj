@@ -168,6 +168,14 @@
     <Compile Include="Migrations\201705030354564_emailtest1.Designer.cs">
       <DependentUpon>201705030354564_emailtest1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201705052200451_reverted.cs" />
+    <Compile Include="Migrations\201705052200451_reverted.Designer.cs">
+      <DependentUpon>201705052200451_reverted.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705052247409_secNumadded.cs" />
+    <Compile Include="Migrations\201705052247409_secNumadded.Designer.cs">
+      <DependentUpon>201705052247409_secNumadded.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\CheckInContext.cs" />
     <Compile Include="Models\UserCheckIn.cs" />
@@ -247,6 +255,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201705030354564_emailtest1.resx">
       <DependentUpon>201705030354564_emailtest1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705052200451_reverted.resx">
+      <DependentUpon>201705052200451_reverted.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705052247409_secNumadded.resx">
+      <DependentUpon>201705052247409_secNumadded.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

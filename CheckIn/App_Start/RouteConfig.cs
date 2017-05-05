@@ -15,8 +15,8 @@ namespace CheckIn
 
             routes.MapRoute(
                 name: "Default",
-                url: "{controller}/{action}/{id}",
-                defaults: new { controller = "UserCheckIns", action = "Create", id = UrlParameter.Optional }
+                url: "{controller}/{action}/{id}/{sec}",
+                defaults: new { controller = "UserCheckIns", action = "Create", id = UrlParameter.Optional,sec=UrlParameter.Optional}
             );
         }
     }
