@@ -10,7 +10,6 @@ namespace CheckIn.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
-            ContextKey = "CheckIn.Models.CheckInContext";
         }
 
         protected override void Seed(CheckIn.Models.CheckInContext context)

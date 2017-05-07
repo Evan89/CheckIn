@@ -7,13 +7,13 @@ namespace CheckIn.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class reverted : IMigrationMetadata
+    public sealed partial class secStringAdded : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(reverted));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(secStringAdded));
         
         string IMigrationMetadata.Id
         {
-            get { return "201705052200451_reverted"; }
+            get { return "201705071734228_secStringAdded"; }
         }
         
         string IMigrationMetadata.Source

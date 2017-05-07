@@ -8,6 +8,8 @@ using System.Web;
 using System.Web.Mvc;
 using CheckIn.Models;
 using System.Net.Mail;
+using System.Text;
+using System.Security.Cryptography;
 
 namespace CheckIn.Controllers
 {
@@ -58,7 +60,7 @@ namespace CheckIn.Controllers
             {
                 try
                 {
-                    userCheckIn.secNum = new Random().Next(1, 1000000);
+                    userCheckIn.secString = GetSecurityString();
                     db.UserCheckIns.Add(userCheckIn);
                     db.SaveChanges();
                     sendEmail(userCheckIn);
@@ -143,7 +145,7 @@ namespace CheckIn.Controllers
         }
 
         // GET: UserCheckIns/Delete/5
-        public ActionResult Delete(int? id, int? sec)
+        public ActionResult Delete(int? id, string sec)
         {
             if (id == null)
             {
@@ -154,7 +156,7 @@ namespace CheckIn.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             UserCheckIn userCheckIn = db.UserCheckIns.Find(id);
-            if (userCheckIn == null || sec!=(userCheckIn.secNum))
+            if (userCheckIn == null || !sec.Equals(userCheckIn.secString))
             {
                 return HttpNotFound();
             }
@@ -179,6 +181,29 @@ namespace CheckIn.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        /**
+        * Generates and returns a random, cryptographically safe alpha-numeric string.
+        */
+        private static string GetSecurityString(int length = 64)
+        {
+            const string valid = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890-_";
+            StringBuilder res = new StringBuilder();
+
+            using (RNGCryptoServiceProvider rng = new RNGCryptoServiceProvider())
+            {
+                byte[] uintBuffer = new byte[sizeof(uint)];
+
+                while (length-- > 0)
+                {
+                    rng.GetBytes(uintBuffer);
+                    uint num = BitConverter.ToUInt32(uintBuffer, 0);
+                    res.Append(valid[(int)(num % (uint)valid.Length)]);
+                }
+            }
+
+            return res.ToString();
         }
     }
 }
