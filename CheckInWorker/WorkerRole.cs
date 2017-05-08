@@ -9,8 +9,6 @@ using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.Diagnostics;
 using Microsoft.WindowsAzure.ServiceRuntime;
 using Microsoft.WindowsAzure.Storage;
-using Microsoft.WindowsAzure.Storage.Queue;
-using CheckInCommon;
 
 namespace CheckInWorker
 {
@@ -18,72 +16,19 @@ namespace CheckInWorker
     {
         private readonly CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
         private readonly ManualResetEvent runCompleteEvent = new ManualResetEvent(false);
-        private CloudQueue checkInQueue;
-        private CheckInContext db;
 
         public override void Run()
         {
             Trace.TraceInformation("CheckInWorker is running");
-            CloudQueueMessage msg = null;
 
-            // To make the worker role more scalable, implement multi-threaded and 
-            // asynchronous code. See:
-            // http://msdn.microsoft.com/en-us/library/ck8bc5c6.aspx
-            // http://www.asp.net/aspnet/overview/developing-apps-with-windows-azure/building-real-world-cloud-apps-with-windows-azure/web-development-best-practices#async
-            while (true)
+            try
             {
-                try
-                {
-                    // Retrieve a new message from the queue.
-                    // A production app could be more efficient and scalable and conserve
-                    // on transaction costs by using the GetMessages method to get
-                    // multiple queue messages at a time. See:
-                    // http://azure.microsoft.com/en-us/documentation/articles/cloud-services-dotnet-multi-tier-app-storage-5-worker-role-b/#addcode
-                    msg = this.checkInQueue.GetMessage();
-                    if (msg != null)
-                    {
-                        ProcessQueueMessage(msg);
-                    }
-                    else
-                    {
-                        System.Threading.Thread.Sleep(1000);
-                    }
-                }
-                catch (StorageException e)
-                {
-                    if (msg != null && msg.DequeueCount > 5)
-                    {
-                        this.checkInQueue.DeleteMessage(msg);
-                        Trace.TraceError("Deleting poison queue item: '{0}'", msg.AsString);
-                    }
-                    Trace.TraceError("Exception in ContosoAdsWorker: '{0}'", e.Message);
-                    System.Threading.Thread.Sleep(5000);
-                }
+                this.RunAsync(this.cancellationTokenSource.Token).Wait();
             }
-        }
-
-        private void ProcessQueueMessage(CloudQueueMessage msg)
-        {
-            Trace.TraceInformation("Processing queue message {0}", msg);
-
-            // Queue message contains Id.
-            var Id = int.Parse(msg.AsString);
-            UserCheckIn userCheckIn = db.UserCheckIns.Find(Id);
-
-            if (userCheckIn == null)
+            finally
             {
-                throw new Exception(String.Format("Id {0} not found, can't send email to contacts.", Id.ToString()));
+                this.runCompleteEvent.Set();
             }
-
-            // Send email to contacts -----------------------------------------------------------------------
-
-            // Delete this record from database --------------------------------------------------------------
-
-            db.SaveChanges();
-            Trace.TraceInformation("Email sent to contacts. CheckIn deleted from database: {0}", userCheckIn.firstName + " " + userCheckIn.lastName);
-
-            // Remove message from queue.
-            this.checkInQueue.DeleteMessage(msg);
         }
 
         public override bool OnStart()
