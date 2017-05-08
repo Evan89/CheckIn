@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace CheckIn.Models
+namespace CheckInCommon
 {
     public class UserCheckIn
     {
@@ -34,19 +34,7 @@ namespace CheckIn.Models
 
         [Required(ErrorMessage = "Contact Email address is required.")]
         [DataType(DataType.EmailAddress)]
-        public string contactEmail1 { get; set; }
-
-        [DataType(DataType.EmailAddress)]
-        public string contactEmail2 { get; set; }
-
-        [DataType(DataType.EmailAddress)]
-        public string contactEmail3 { get; set; }
-
-        [DataType(DataType.EmailAddress)]
-        public string contactEmail4 { get; set; }
-
-        [DataType(DataType.EmailAddress)]
-        public string contactEmail5 { get; set; }
+        public string contactEmail { get; set; }
 
         [Required(ErrorMessage = "Location is required.")]
         [StringLength(20)]
