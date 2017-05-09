@@ -10,6 +10,7 @@ using CheckInCommon;
 using System.Net.Mail;
 using System.Text;
 using System.Security.Cryptography;
+using System.Collections.Specialized;
 
 namespace CheckInWeb.Controllers
 {
@@ -54,7 +55,7 @@ namespace CheckInWeb.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,firstName,lastName,telNum,email,contactEmail,location,returnTime,message")] UserCheckIn userCheckIn)
+        public ActionResult Create([Bind(Include = "ID,firstName,lastName,telNum,email,contactEmail,location,returnTime,message,subscribe")] UserCheckIn userCheckIn)
         {
             if (ModelState.IsValid)
             {
@@ -63,6 +64,10 @@ namespace CheckInWeb.Controllers
                     userCheckIn.secString = GetSecurityString();
                     db.UserCheckIns.Add(userCheckIn);
                     db.SaveChanges();
+                    if(userCheckIn.subscribe)
+                    {
+                        subscribe(userCheckIn);
+                    }
                     sendEmail(userCheckIn);
                 }
                 catch (Exception e)
@@ -76,6 +81,44 @@ namespace CheckInWeb.Controllers
             return View(userCheckIn);
         }
         
+        private void subscribe(UserCheckIn userCheckIn)
+        {
+            string url = "http://go.pardot.com/l/82512/2017-05-08/d26jpz";
+
+            // Create a new WebClient instance.
+            WebClient myWebClient = new WebClient();
+
+            // Create a new NameValueCollection instance to hold some custom parameters to be posted to the URL.
+            NameValueCollection myNameValueCollection = new NameValueCollection();
+
+            //Set 1
+            /*
+            myNameValueCollection.Add("82512_109811pi_82512_109811", userCheckIn.firstName);
+
+            myNameValueCollection.Add("82512_109813pi_82512_109813", userCheckIn.lastName);
+
+            myNameValueCollection.Add("82512_109815pi_82512_109815", userCheckIn.email);
+            */
+            
+
+            //Set 2
+            myNameValueCollection.Add("First Name", userCheckIn.firstName);
+
+            myNameValueCollection.Add("Last Name", userCheckIn.lastName);
+
+            myNameValueCollection.Add("Email", userCheckIn.email);
+            
+
+            System.Diagnostics.Debug.WriteLine("\nUploading to {0} ...", url);
+            
+            // 'The Upload(String,NameValueCollection)' implicitly method sets HTTP POST as the request method.            
+            byte[] responseArray = myWebClient.UploadValues(url, myNameValueCollection);
+
+            // Decode and display the response.
+            System.Diagnostics.Debug.WriteLine("\nResponse received was :\n{0}", Encoding.ASCII.GetString(responseArray));
+
+        }
+
         private void sendEmail(UserCheckIn userCheckIn)
         {
            
@@ -133,7 +176,7 @@ namespace CheckInWeb.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,firstName,lastName,telNum,email,contactEmail,location,returnTime,message")] UserCheckIn userCheckIn)
+        public ActionResult Edit([Bind(Include = "ID,firstName,lastName,telNum,email,contactEmail,location,returnTime,message,subscribe")] UserCheckIn userCheckIn)
         {
             if (ModelState.IsValid)
             {

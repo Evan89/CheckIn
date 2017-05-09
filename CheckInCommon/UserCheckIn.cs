@@ -46,6 +46,8 @@ namespace CheckInCommon
 
         [DataType(DataType.MultilineText)]
         public string message { get; set; }
+
+        public Boolean subscribe { get; set; }
        
         public string secString { get; set; }
     }

@@ -50,12 +50,29 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CheckInContext.cs" />
+    <Compile Include="Migrations\201705091800135_InitialCreate.cs" />
+    <Compile Include="Migrations\201705091800135_InitialCreate.Designer.cs">
+      <DependentUpon>201705091800135_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705091821184_subscribebox.cs" />
+    <Compile Include="Migrations\201705091821184_subscribebox.Designer.cs">
+      <DependentUpon>201705091821184_subscribebox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserCheckIn.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201705091800135_InitialCreate.resx">
+      <DependentUpon>201705091800135_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705091821184_subscribebox.resx">
+      <DependentUpon>201705091821184_subscribebox.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
