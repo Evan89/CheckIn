@@ -29,6 +29,7 @@ namespace CheckInWeb.Controllers
         {
             return View(db.UserCheckIns.ToList());
         }
+       
 
         // GET: UserCheckIns/Details/5
         public ActionResult Details(int? id)
@@ -62,6 +63,10 @@ namespace CheckInWeb.Controllers
             {
                 try
                 {
+                    if (userCheckIn.returnTime.CompareTo(DateTime.Now) < 0)
+                    {
+                        userCheckIn.returnTime = userCheckIn.returnTime.AddDays(1);
+                    }
                     userCheckIn.secString = GetSecurityString();
                     db.UserCheckIns.Add(userCheckIn);
                     db.SaveChanges();
