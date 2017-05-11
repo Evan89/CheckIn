@@ -34,7 +34,16 @@ namespace CheckInCommon
 
         [Required(ErrorMessage = "Contact Email address is required.")]
         [DataType(DataType.EmailAddress)]
-        public string contactEmail { get; set; }
+        public string contactEmail1 { get; set; }
+
+        [DataType(DataType.EmailAddress)]
+        public string contactEmail2 { get; set; }
+
+        [DataType(DataType.EmailAddress)]
+        public string contactEmail3 { get; set; }
+
+        [DataType(DataType.EmailAddress)]
+        public string contactEmail4 { get; set; }
 
         [Required(ErrorMessage = "Location is required.")]
         [StringLength(20)]

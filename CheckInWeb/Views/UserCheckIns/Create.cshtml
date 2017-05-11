@@ -48,10 +48,31 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.contactEmail,"Contact email address", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.contactEmail1,"Contact Email Address", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.contactEmail, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.contactEmail, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.contactEmail1, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.contactEmail1, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.contactEmail2,"Additional Contact Email Address", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.contactEmail2, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.contactEmail3,"Additional Contact Email Address", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.contactEmail3, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.contactEmail4,"Additional Contact Email Address", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.contactEmail4, new { htmlAttributes = new { @class = "form-control" } })
             </div>
         </div>
 

@@ -57,7 +57,7 @@ namespace CheckInWeb.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,firstName,lastName,telNum,email,contactEmail,location,returnTime,message,subscribe")] UserCheckIn userCheckIn)
+        public ActionResult Create([Bind(Include = "ID,firstName,lastName,telNum,email,contactEmail1,contactEmail2,contactEmail3,contactEmail4,location,returnTime,message,subscribe")] UserCheckIn userCheckIn)
         {
             if (ModelState.IsValid)
             {
@@ -156,7 +156,7 @@ namespace CheckInWeb.Controllers
                     "</tr> " +
                     "<tr>" +
                         "<td>Emergency contact</td>" +
-                        "<td>" + userCheckIn.contactEmail + "</td>" +
+                        "<td>" + userCheckIn.contactEmail1 + "</td>" +
                     "</tr> " +
                     "<tr>" +
                         "<td>Return time</td>" +
@@ -196,7 +196,7 @@ namespace CheckInWeb.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,firstName,lastName,telNum,email,contactEmail,location,returnTime,message,subscribe")] UserCheckIn userCheckIn)
+        public ActionResult Edit([Bind(Include = "ID,firstName,lastName,telNum,email,contactEmail1,contactEmail2,contactEmail3,contactEmail4,location,returnTime,message,subscribe")] UserCheckIn userCheckIn)
         {
             if (ModelState.IsValid)
             {

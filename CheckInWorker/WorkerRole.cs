@@ -100,7 +100,7 @@ namespace CheckInWorker
 
             MailMessage mailMessage = new MailMessage();
             mailMessage.From = new MailAddress("noreply@checkinweb.ca");
-            mailMessage.To.Add(userCheckIn.contactEmail);
+            mailMessage.To.Add(userCheckIn.contactEmail1);
             mailMessage.Subject = userCheckIn.firstName + " " + userCheckIn.lastName + " has not checked back in from " + userCheckIn.location ;
             mailMessage.IsBodyHtml = true;
             mailMessage.Body = "Hello <br/> <br/>" 
