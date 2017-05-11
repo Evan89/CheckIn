@@ -147,6 +147,37 @@ namespace CheckInWeb.Controllers
             mailMessage.To.Add(userCheckIn.email);
             mailMessage.Subject = "You've been checked in!";
             mailMessage.IsBodyHtml = true;
+
+            string contactEmailRows = "<tr>" +
+                        "<td>Emergency contact</td>" +
+                        "<td>" + userCheckIn.contactEmail1 + "</td>" +
+                    "</tr> ";
+
+            // Add additional contact emails if they exists
+            if(userCheckIn.contactEmail2 != null)
+            {
+                contactEmailRows += "<tr>" +
+                        "<td>Emergency contact</td>" +
+                        "<td>" + userCheckIn.contactEmail2 + "</td>" +
+                    "</tr> ";
+            }
+
+            if (userCheckIn.contactEmail3 != null)
+            {
+                contactEmailRows += "<tr>" +
+                        "<td>Emergency contact</td>" +
+                        "<td>" + userCheckIn.contactEmail3 + "</td>" +
+                    "</tr> ";
+            }
+
+            if (userCheckIn.contactEmail4 != null)
+            {
+                contactEmailRows += "<tr>" +
+                        "<td>Emergency contact</td>" +
+                        "<td>" + userCheckIn.contactEmail4 + "</td>" +
+                    "</tr> ";
+            }
+
             mailMessage.Body = "Hello " + userCheckIn.firstName + "! <br/> <br/>" +
                 "You've checked into SafetyLineLoneWorker's free check-in web app. Here are your check-in details.<br/><br/>" +
                 "<table>" +
@@ -154,10 +185,7 @@ namespace CheckInWeb.Controllers
                         "<td>Full Name</td>" +
                         "<td>" + userCheckIn.firstName + " "+ userCheckIn.lastName+"</td>" +
                     "</tr> " +
-                    "<tr>" +
-                        "<td>Emergency contact</td>" +
-                        "<td>" + userCheckIn.contactEmail1 + "</td>" +
-                    "</tr> " +
+                    contactEmailRows +
                     "<tr>" +
                         "<td>Return time</td>" +
                         "<td>" + userCheckIn.returnTime + "</td>" +
