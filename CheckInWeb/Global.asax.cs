@@ -17,5 +17,11 @@ namespace CheckInWeb
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
+
+        protected void Application_BeginRequest(object sender, EventArgs e)
+        {
+            // Uncoommnet and add domanin URL when we launch to the site
+            //HttpContext.Current.Response.AddHeader("x-frame-options", "ALLOW-FROM=" + this.topurl);
+        }
     }
 }
