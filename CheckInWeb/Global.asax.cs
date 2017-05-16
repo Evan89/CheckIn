@@ -20,7 +20,7 @@ namespace CheckInWeb
 
         protected void Application_BeginRequest(object sender, EventArgs e)
         {
-            // Uncoommnet and add domanin URL when we launch to the site
+            // Prevents this app to be embedded in other sites
             //HttpContext.Current.Response.AddHeader("x-frame-options", "ALLOW-FROM=" + this.topurl);
         }
     }

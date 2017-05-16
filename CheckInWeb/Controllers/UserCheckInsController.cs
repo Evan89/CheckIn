@@ -87,6 +87,7 @@ namespace CheckInWeb.Controllers
             return View(userCheckIn);
         }
         
+        // Subscribes the user to our newsletter
         private void subscribe(UserCheckIn userCheckIn)
         {   
 
@@ -107,7 +108,6 @@ namespace CheckInWeb.Controllers
             //Email
             myNameValueCollection.Add("82512_109815pi_82512_109815", userCheckIn.email);
             
-
             System.Diagnostics.Debug.WriteLine("\nUploading to {0} ...", url);
             
             // 'The Upload(String,NameValueCollection)' implicitly method sets HTTP POST as the request method.            
@@ -139,6 +139,7 @@ namespace CheckInWeb.Controllers
             */
         }
 
+        // Sends the confirmation email to the user
         private void sendEmail(UserCheckIn userCheckIn)
         {
            
@@ -148,50 +149,53 @@ namespace CheckInWeb.Controllers
             mailMessage.Subject = "You've been checked in!";
             mailMessage.IsBodyHtml = true;
 
-            string contactEmailRows = "<tr>" +
-                        "<td>Emergency contact</td>" +
+            string contactEmailTableRows = "<tr>" +
+                        "<td>Emergency contact(s)</td>" +
                         "<td>" + userCheckIn.contactEmail1 + "</td>" +
                     "</tr> ";
 
             // Add additional contact emails if they exists
             if(userCheckIn.contactEmail2 != null)
             {
-                contactEmailRows += "<tr>" +
-                        "<td>Emergency contact</td>" +
+                contactEmailTableRows += "<tr>" +
+                        "<td></td>" +
                         "<td>" + userCheckIn.contactEmail2 + "</td>" +
                     "</tr> ";
             }
 
             if (userCheckIn.contactEmail3 != null)
             {
-                contactEmailRows += "<tr>" +
-                        "<td>Emergency contact</td>" +
+                contactEmailTableRows += "<tr>" +
+                        "<td></td>" +
                         "<td>" + userCheckIn.contactEmail3 + "</td>" +
                     "</tr> ";
             }
 
             if (userCheckIn.contactEmail4 != null)
             {
-                contactEmailRows += "<tr>" +
-                        "<td>Emergency contact</td>" +
+                contactEmailTableRows += "<tr>" +
+                        "<td></td>" +
                         "<td>" + userCheckIn.contactEmail4 + "</td>" +
                     "</tr> ";
             }
 
             mailMessage.Body = "Hello " + userCheckIn.firstName + "! <br/> <br/>" +
-                "You've checked into SafetyLineLoneWorker's free check-in web app. Here are your check-in details.<br/><br/>" +
+                "You've checked into SafetyLineLoneWorker's free check-in web app. Here are your check-in details:<br/><br/>" +
                 "<table>" +
                     "<tr>" +
                         "<td>Full Name</td>" +
                         "<td>" + userCheckIn.firstName + " "+ userCheckIn.lastName+"</td>" +
                     "</tr> " +
-                    contactEmailRows +
+                    contactEmailTableRows +
+                    "<tr>" +
+                        "<td>Location</td>" +
+                        "<td>" + userCheckIn.location + "</td>" +
+                    "</tr> " +
                     "<tr>" +
                         "<td>Return time</td>" +
                         "<td>" + userCheckIn.returnTime + "</td>" +
                     "</tr> " +
                 "</table> ";
-            //mailMessage.IsBodyHtml = true;
 
             SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587);
             smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
@@ -200,7 +204,6 @@ namespace CheckInWeb.Controllers
             smtp.Credentials = new NetworkCredential("checkinwebapp@gmail.com", "tsunamisolutions");//no need to mention here?
 
             smtp.Send(mailMessage);
-
         }
         
 
@@ -235,22 +238,21 @@ namespace CheckInWeb.Controllers
             return View(userCheckIn);
         }
 
-        // GET: UserCheckIns/Delete/5
+        // GET: UserCheckIns/Delete/5/<Security String>
         public ActionResult Delete(int? id, string sec)
         {
-            if (id == null)
+            if (id == null || sec == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            if (sec == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+
             UserCheckIn userCheckIn = db.UserCheckIns.Find(id);
+
             if (userCheckIn == null || !sec.Equals(userCheckIn.secString))
             {
-                return HttpNotFound();
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             return View(userCheckIn);
         }
 
@@ -274,9 +276,7 @@ namespace CheckInWeb.Controllers
             base.Dispose(disposing);
         }
 
-        /**
-        * Generates and returns a random, cryptographically safe alpha-numeric string.
-        */
+        // Generates and returns a random, cryptographically safe alpha-numeric string.
         private static string GetSecurityString(int length = 64)
         {
             const string valid = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890-_";

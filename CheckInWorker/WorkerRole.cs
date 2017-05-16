@@ -73,12 +73,11 @@ namespace CheckInWorker
         {
             CheckInContext db = new CheckInContext();
 
-            // TODO: Replace the following with your own logic.
             while (!cancellationToken.IsCancellationRequested)
             {
                 Trace.TraceInformation("Working");
 
-                DbSqlQuery<UserCheckIn> query = db.UserCheckIns.SqlQuery("SELECT * FROM dbo.UserCheckIns WHERE returnTime <= @p0",DateTime.Now );
+                DbSqlQuery<UserCheckIn> query = db.UserCheckIns.SqlQuery("SELECT * FROM dbo.UserCheckIns WHERE returnTime <= @p0", DateTime.Now);
 
                 List<UserCheckIn> expiredCheckIns = query.ToList();
 
@@ -95,9 +94,9 @@ namespace CheckInWorker
 
         }
 
+        // Sends an email notifying the emergency contacts that the user has failed to check-in
         private void sendMissingEmail(UserCheckIn userCheckIn)
         {
-
             MailMessage mailMessage = new MailMessage();
             mailMessage.From = new MailAddress("noreply@checkinweb.ca");
             mailMessage.To.Add(userCheckIn.contactEmail1);
@@ -119,13 +118,16 @@ namespace CheckInWorker
 
             mailMessage.Subject = userCheckIn.firstName + " " + userCheckIn.lastName + " has not checked back in from " + userCheckIn.location ;
             mailMessage.IsBodyHtml = true;
-            mailMessage.Body = "Hello <br/> <br/>" 
-                + "This is to inform you that " + userCheckIn.firstName + " " + userCheckIn.lastName 
-                + " left you as an emergency contact. <br/>" 
-                + userCheckIn.firstName + " was expected to check in at " 
-                + userCheckIn.returnTime + "<br/>Ya boi missing. <br/> Here is the message " + userCheckIn.firstName + " left.<br/>" + userCheckIn.message;
-                
-            //mailMessage.IsBodyHtml = true;
+            mailMessage.Body = "Hello <br/> <br/>"
+                + "This is to inform you that " + userCheckIn.firstName + " " + userCheckIn.lastName
+                + " has left you as an emergency contact. <br/>"
+                + userCheckIn.firstName + " was expected to check in at "
+                + userCheckIn.returnTime;
+
+            if (userCheckIn.message != null)
+            {
+                mailMessage.Body += "<br/> Here is the message " + userCheckIn.firstName + " left:<br/>" + userCheckIn.message;
+            }
 
             smtp = new SmtpClient("smtp.gmail.com", 587);
             smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
@@ -134,7 +136,6 @@ namespace CheckInWorker
             smtp.Credentials = new NetworkCredential("checkinwebapp@gmail.com", "tsunamisolutions");//no need to mention here?
 
             smtp.Send(mailMessage);
-
         }
     }
 }
