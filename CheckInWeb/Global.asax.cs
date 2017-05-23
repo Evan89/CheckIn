@@ -10,6 +10,9 @@ namespace CheckInWeb
 {
     public class MvcApplication : System.Web.HttpApplication
     {
+        public const string DOMAIN_URL = "http://saftetycheckin.cloudapp.net";
+
+
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
@@ -21,7 +24,7 @@ namespace CheckInWeb
         protected void Application_BeginRequest(object sender, EventArgs e)
         {
             // Prevents this app to be embedded in other sites
-            //HttpContext.Current.Response.AddHeader("x-frame-options", "ALLOW-FROM=" + this.topurl);
+            HttpContext.Current.Response.AddHeader("x-frame-options", "ALLOW-FROM=" + DOMAIN_URL);
         }
     }
 }

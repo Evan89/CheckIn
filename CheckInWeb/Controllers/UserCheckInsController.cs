@@ -29,22 +29,6 @@ namespace CheckInWeb.Controllers
         {
             return View(db.UserCheckIns.ToList());
         }
-       
-
-        // GET: UserCheckIns/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            UserCheckIn userCheckIn = db.UserCheckIns.Find(id);
-            if (userCheckIn == null)
-            {
-                return HttpNotFound();
-            }
-            return View(userCheckIn);
-        }
 
         // GET: UserCheckIns/Create
         public ActionResult Create()
@@ -173,7 +157,8 @@ namespace CheckInWeb.Controllers
                         "<td>Return time</td>" +
                         "<td>" + userCheckIn.returnTime + "</td>" +
                     "</tr> " +
-                "</table> ";
+                "</table> " + 
+                "<br><a href=\"" + MvcApplication.DOMAIN_URL + "/UserCheckIns/Delete/" + userCheckIn.ID + "/" + userCheckIn.secString + "\">Check-in here when you've returned.</a>";
 
             SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587);
             smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
@@ -182,38 +167,6 @@ namespace CheckInWeb.Controllers
             smtp.Credentials = new NetworkCredential("checkinwebapp@gmail.com", "tsunamisolutions");//no need to mention here?
 
             smtp.Send(mailMessage);
-        }
-        
-
-        // GET: UserCheckIns/Edit/5
-        public ActionResult Edit(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            UserCheckIn userCheckIn = db.UserCheckIns.Find(id);
-            if (userCheckIn == null)
-            {
-                return HttpNotFound();
-            }
-            return View(userCheckIn);
-        }
-
-        // POST: UserCheckIns/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,firstName,lastName,telNum,email,contactEmail1,contactEmail2,contactEmail3,contactEmail4,location,returnTime,message,subscribe")] UserCheckIn userCheckIn)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(userCheckIn).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            return View(userCheckIn);
         }
 
         // GET: UserCheckIns/Delete/5/<Security String>
@@ -242,7 +195,8 @@ namespace CheckInWeb.Controllers
             UserCheckIn userCheckIn = db.UserCheckIns.Find(id);
             db.UserCheckIns.Remove(userCheckIn);
             db.SaveChanges();
-            return RedirectToAction("Index");
+
+            return RedirectToAction("Create");
         }
 
         protected override void Dispose(bool disposing)
