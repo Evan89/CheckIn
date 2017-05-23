@@ -49,29 +49,25 @@ namespace CheckInWeb.Controllers
             {
                 try
                 {
-                    
-                    if (userCheckIn.returnTime.CompareTo(DateTime.Now) <= 0)
+                    // roll-over to the next day if the return time is earlier than the current time
+                    if (userCheckIn.returnTime.CompareTo(DateTime.Now) < 0)
                     {
 
                         userCheckIn.returnTime = userCheckIn.returnTime.AddDays(1);
                     }
 
+                    // convert local time to UTC
+                    userCheckIn.returnTime = TimeZoneInfo.ConvertTimeToUtc(userCheckIn.returnTime, TimeZoneInfo.Local);
 
-                    /*
-                    System.Diagnostics.Debug.WriteLine("");
-                    System.Diagnostics.Debug.WriteLine("");
-                    System.Diagnostics.Debug.WriteLine("");
-                    System.Diagnostics.Debug.WriteLine("");
-                    System.Diagnostics.Debug.WriteLine(DateTime.Now);
-                    System.Diagnostics.Debug.WriteLine(userCheckIn.returnTime);
-                    */
                     userCheckIn.secString = GetSecurityString();
                     db.UserCheckIns.Add(userCheckIn);
                     db.SaveChanges();
+
                     if(userCheckIn.subscribe)
                     {
                         subscribe(userCheckIn);
                     }
+
                     sendEmail(userCheckIn);
                 }
                 catch (Exception e)
@@ -169,7 +165,7 @@ namespace CheckInWeb.Controllers
                     "</tr> " +
                     "<tr>" +
                         "<td>Return time</td>" +
-                        "<td>" + userCheckIn.returnTime + "</td>" +
+                        "<td>" + TimeZoneInfo.ConvertTimeFromUtc(userCheckIn.returnTime, TimeZoneInfo.Local) + "</td>" +
                     "</tr> " +
                 "</table> " + 
                 "<br><a href=\"" + MvcApplication.DOMAIN_URL + "/UserCheckIns/Delete/" + userCheckIn.ID + "/" + userCheckIn.secString + "\">Check-in here when you've returned.</a>";
