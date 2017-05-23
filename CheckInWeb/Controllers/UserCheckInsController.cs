@@ -115,28 +115,6 @@ namespace CheckInWeb.Controllers
 
             // Decode and display the response.
             System.Diagnostics.Debug.WriteLine("\nResponse received was :\n{0}", Encoding.ASCII.GetString(responseArray));
-            
-            /*
-            // fname=evan&lname=chen&email=evan.c1995@gmail.com
-            string post = "82512_109811pi_82512_109811=evan&82512_109813pi_82512_109813=evan2&82512_109815pi_82512_109815=evan.c1995@gmail.com";
-            var encoding = new ASCIIEncoding();
-            byte[] data = encoding.GetBytes(post);
-            WebRequest request = WebRequest.Create(url);
-            request.Method = "POST";
-            request.ContentType = "application/x-www-form-urlencoded";
-            request.ContentLength = data.Length;
-            Stream stream = request.GetRequestStream();
-            stream.Write(data, 0, data.Length);
-            stream.Close();
-            WebResponse response = request.GetResponse();
-            String result;
-            StreamReader sr = new StreamReader(response.GetResponseStream());
-            
-            result = sr.ReadToEnd();
-            sr.Close();
-            
-            System.Diagnostics.Debug.WriteLine("\nResponse received was :\n{0}", result);
-            */
         }
 
         // Sends the confirmation email to the user
