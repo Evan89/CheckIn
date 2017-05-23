@@ -17,6 +17,8 @@ namespace CheckInWeb.Controllers
 {
     public class UserCheckInsController : Controller
     {
+        public const string URL = "http://safetycheckin.cloudapp.net/UserCheckIns/Delete/";
+
         private CheckInContext db = new CheckInContext();
 
         // GET: UserCheckIns
@@ -63,10 +65,22 @@ namespace CheckInWeb.Controllers
             {
                 try
                 {
-                    if (userCheckIn.returnTime.CompareTo(DateTime.Now) < 0)
+                    
+                    if (userCheckIn.returnTime.CompareTo(DateTime.Now) <= 0)
                     {
+
                         userCheckIn.returnTime = userCheckIn.returnTime.AddDays(1);
                     }
+
+
+                    /*
+                    System.Diagnostics.Debug.WriteLine("");
+                    System.Diagnostics.Debug.WriteLine("");
+                    System.Diagnostics.Debug.WriteLine("");
+                    System.Diagnostics.Debug.WriteLine("");
+                    System.Diagnostics.Debug.WriteLine(DateTime.Now);
+                    System.Diagnostics.Debug.WriteLine(userCheckIn.returnTime);
+                    */
                     userCheckIn.secString = GetSecurityString();
                     db.UserCheckIns.Add(userCheckIn);
                     db.SaveChanges();
@@ -99,7 +113,7 @@ namespace CheckInWeb.Controllers
             // Create a new NameValueCollection instance to hold some custom parameters to be posted to the URL.
             NameValueCollection myNameValueCollection = new NameValueCollection();
 
-            //First Name and yes they gave us those fucking values to use
+            //First Name and yes they gave us those values to use
             myNameValueCollection.Add("82512_109811pi_82512_109811", userCheckIn.firstName);
 
             //Last Name
@@ -195,7 +209,13 @@ namespace CheckInWeb.Controllers
                         "<td>Return time</td>" +
                         "<td>" + userCheckIn.returnTime + "</td>" +
                     "</tr> " +
-                "</table> ";
+                    "<tr>" +
+                        "<td>Server time</td>" +
+                        "<td>" + DateTime.Now + "</td>" +
+                    "</tr> " +
+                "</table> " + 
+                "<br>" +
+                "Click the link to check out: " + URL + userCheckIn.ID + "/" + userCheckIn.secString;
 
             SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587);
             smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
@@ -237,6 +257,7 @@ namespace CheckInWeb.Controllers
             }
             return View(userCheckIn);
         }
+
 
         // GET: UserCheckIns/Delete/5/<Security String>
         public ActionResult Delete(int? id, string sec)
