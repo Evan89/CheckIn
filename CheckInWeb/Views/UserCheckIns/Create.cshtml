@@ -1,10 +1,10 @@
 ﻿@model CheckInCommon.UserCheckIn
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "SafetyLine";
 }
 
-<h2>Check-In</h2>
+<h2><img src="~/Content/Images/Logo.png" /></h2>
 
 
 @using (Html.BeginForm()) 
@@ -101,9 +101,9 @@
         </div>
 
         <div class="form-group">
-            <div class="col-md-offset-1 col-md-11">
+            @Html.LabelFor(model => model.subscribe, "Subscribe to our Newsletter!", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
                 @Html.CheckBoxFor(model => model.subscribe, new { htmlAttributes = new { @class = "form-control " } })
-                <span>Subscribe to the SafetyLineLoneWorker newsletter</span>
             </div>
         </div>
 
