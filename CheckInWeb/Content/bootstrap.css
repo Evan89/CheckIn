@@ -4388,7 +4388,7 @@ textarea.input-group-sm > .input-group-btn > .btn {
 }
 
 .navbar-default .navbar-text {
-  color: #777777;
+  color: #ffffff;
 }
 
 .navbar-default .navbar-nav > li > a {
@@ -4490,33 +4490,33 @@ textarea.input-group-sm > .input-group-btn > .btn {
 }
 
 .navbar-inverse {
-  background-color: #222222;
-  border-color: #080808;
+    background-color: #4D74B0;
+    border-color: #080808;
 }
 
-.navbar-inverse .navbar-brand {
-  color: #999999;
-}
+    .navbar-inverse .navbar-brand {
+        color: #FFFFFF;
+    }
 
-.navbar-inverse .navbar-brand:hover,
-.navbar-inverse .navbar-brand:focus {
-  color: #ffffff;
-  background-color: transparent;
-}
+        .navbar-inverse .navbar-brand:hover,
+        .navbar-inverse .navbar-brand:focus {
+            color: #FFFFFF;
+            background-color: transparent;
+        }
 
-.navbar-inverse .navbar-text {
-  color: #999999;
-}
+    .navbar-inverse .navbar-text {
+        color: #FFFFFF;
+    }
 
-.navbar-inverse .navbar-nav > li > a {
-  color: #999999;
-}
+    .navbar-inverse .navbar-nav > li > a {
+        color: #FFFFFF;
+    }
 
-.navbar-inverse .navbar-nav > li > a:hover,
-.navbar-inverse .navbar-nav > li > a:focus {
-  color: #ffffff;
-  background-color: transparent;
-}
+    .navbar-inverse .navbar-nav > li > a:hover,
+    .navbar-inverse .navbar-nav > li > a:focus {
+        color: #FFFFFF;
+        background-color: transparent;
+    }
 
 .navbar-inverse .navbar-nav > .active > a,
 .navbar-inverse .navbar-nav > .active > a:hover,

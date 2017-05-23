@@ -83,8 +83,6 @@
             @Html.DisplayFor(modelItem => item.message)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
             @Html.ActionLink("Delete", "Delete", new { id=item.ID, sec=item.secString })
         </td>
     </tr>

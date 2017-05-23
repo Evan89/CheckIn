@@ -1,15 +1,14 @@
 ﻿@model IEnumerable<CheckInCommon.UserCheckIn>
 
-
 @{
-    ViewBag.Title = "PostPage";
+    ViewBag.Title = "Check-In";
 }
 <div class="container">
-    <h2>Post Page</h2>
-    <p>Thank you...</p>
+    <h2>Thank You</h2>
+    <p>Thank you for using SafetyLineLoneWorker's check-in service. You should receive an email from us shortly that will allow you to check-in when you return from you trip. If you do not check-in before the return time you selected, your emergency contact(s) will be notified via email.</p>
     <a href="https://safetylineloneworker.com/">Return to SafetyLineLoneWorker</a>
 
-    <br />
+    <br /><br />
 
     @Html.ActionLink("Back to Form", "Create", "UserCheckIns", null, new { @class = "btn btn-default" })
 </div>

@@ -8,23 +8,19 @@ namespace CheckInWeb.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult Index()
+        public ActionResult Home()
         {
-            return View();
+            return new RedirectResult("https://safetylineloneworker.com/");
         }
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
+            return new RedirectResult("https://safetylineloneworker.com/tour/");
         }
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
+            return new RedirectResult("https://safetylineloneworker.com/contact-us/");
         }
     }
 }

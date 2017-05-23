@@ -31,22 +31,6 @@ namespace CheckInWeb.Controllers
         {
             return View(db.UserCheckIns.ToList());
         }
-       
-
-        // GET: UserCheckIns/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            UserCheckIn userCheckIn = db.UserCheckIns.Find(id);
-            if (userCheckIn == null)
-            {
-                return HttpNotFound();
-            }
-            return View(userCheckIn);
-        }
 
         // GET: UserCheckIns/Create
         public ActionResult Create()
@@ -129,28 +113,6 @@ namespace CheckInWeb.Controllers
 
             // Decode and display the response.
             System.Diagnostics.Debug.WriteLine("\nResponse received was :\n{0}", Encoding.ASCII.GetString(responseArray));
-            
-            /*
-            // fname=evan&lname=chen&email=evan.c1995@gmail.com
-            string post = "82512_109811pi_82512_109811=evan&82512_109813pi_82512_109813=evan2&82512_109815pi_82512_109815=evan.c1995@gmail.com";
-            var encoding = new ASCIIEncoding();
-            byte[] data = encoding.GetBytes(post);
-            WebRequest request = WebRequest.Create(url);
-            request.Method = "POST";
-            request.ContentType = "application/x-www-form-urlencoded";
-            request.ContentLength = data.Length;
-            Stream stream = request.GetRequestStream();
-            stream.Write(data, 0, data.Length);
-            stream.Close();
-            WebResponse response = request.GetResponse();
-            String result;
-            StreamReader sr = new StreamReader(response.GetResponseStream());
-            
-            result = sr.ReadToEnd();
-            sr.Close();
-            
-            System.Diagnostics.Debug.WriteLine("\nResponse received was :\n{0}", result);
-            */
         }
 
         // Sends the confirmation email to the user
@@ -209,13 +171,8 @@ namespace CheckInWeb.Controllers
                         "<td>Return time</td>" +
                         "<td>" + userCheckIn.returnTime + "</td>" +
                     "</tr> " +
-                    "<tr>" +
-                        "<td>Server time</td>" +
-                        "<td>" + DateTime.Now + "</td>" +
-                    "</tr> " +
                 "</table> " + 
-                "<br>" +
-                "Click the link to check out: " + URL + userCheckIn.ID + "/" + userCheckIn.secString;
+                "<br><a href=\"" + MvcApplication.DOMAIN_URL + "/UserCheckIns/Delete/" + userCheckIn.ID + "/" + userCheckIn.secString + "\">Check-in here when you've returned.</a>";
 
             SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587);
             smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
@@ -225,39 +182,6 @@ namespace CheckInWeb.Controllers
 
             smtp.Send(mailMessage);
         }
-        
-
-        // GET: UserCheckIns/Edit/5
-        public ActionResult Edit(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            UserCheckIn userCheckIn = db.UserCheckIns.Find(id);
-            if (userCheckIn == null)
-            {
-                return HttpNotFound();
-            }
-            return View(userCheckIn);
-        }
-
-        // POST: UserCheckIns/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,firstName,lastName,telNum,email,contactEmail1,contactEmail2,contactEmail3,contactEmail4,location,returnTime,message,subscribe")] UserCheckIn userCheckIn)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(userCheckIn).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            return View(userCheckIn);
-        }
-
 
         // GET: UserCheckIns/Delete/5/<Security String>
         public ActionResult Delete(int? id, string sec)
@@ -285,7 +209,8 @@ namespace CheckInWeb.Controllers
             UserCheckIn userCheckIn = db.UserCheckIns.Find(id);
             db.UserCheckIns.Remove(userCheckIn);
             db.SaveChanges();
-            return RedirectToAction("Index");
+
+            return RedirectToAction("Create");
         }
 
         protected override void Dispose(bool disposing)

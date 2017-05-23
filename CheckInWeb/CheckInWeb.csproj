@@ -199,18 +199,15 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\UserCheckIns\Create.cshtml" />
     <Content Include="Views\UserCheckIns\Delete.cshtml" />
-    <Content Include="Views\UserCheckIns\Details.cshtml" />
-    <Content Include="Views\UserCheckIns\Edit.cshtml" />
     <Content Include="Views\UserCheckIns\Index.cshtml" />
     <Content Include="Views\UserCheckIns\PostPage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="App_LocalResources\" />
+    <Folder Include="Content\Images\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
