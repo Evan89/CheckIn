@@ -77,7 +77,7 @@ namespace CheckInWorker
             {
                 Trace.TraceInformation("Working");
 
-                DbSqlQuery<UserCheckIn> query = db.UserCheckIns.SqlQuery("SELECT * FROM dbo.UserCheckIns WHERE returnTime <= @p0", DateTime.Now);
+                DbSqlQuery<UserCheckIn> query = db.UserCheckIns.SqlQuery("SELECT * FROM dbo.UserCheckIns WHERE returnTime <= @p0", DateTime.UtcNow);
 
                 List<UserCheckIn> expiredCheckIns = query.ToList();
 
@@ -122,7 +122,7 @@ namespace CheckInWorker
                 + "This is to inform you that " + userCheckIn.firstName + " " + userCheckIn.lastName
                 + " has left you as an emergency contact. <br/>"
                 + userCheckIn.firstName + " was expected to check in at "
-                + userCheckIn.returnTime;
+                + TimeZoneInfo.ConvertTimeFromUtc(userCheckIn.returnTime, TimeZoneInfo.Local);
 
             if (userCheckIn.message != null)
             {
