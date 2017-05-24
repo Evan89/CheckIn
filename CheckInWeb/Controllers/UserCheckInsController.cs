@@ -47,8 +47,10 @@ namespace CheckInWeb.Controllers
             {
                 try
                 {
+                    DateTime localNow = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.Local);
+
                     // roll-over to the next day if the return time is earlier than the current time
-                    if (userCheckIn.returnTime.CompareTo(DateTime.Now) < 0)
+                    if (userCheckIn.returnTime.CompareTo(localNow) < 0)
                     {
                         userCheckIn.returnTime = userCheckIn.returnTime.AddDays(1);
                     }

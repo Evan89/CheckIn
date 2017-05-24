@@ -10,7 +10,7 @@ namespace CheckInWeb
 {
     public class MvcApplication : System.Web.HttpApplication
     {
-        public const string DOMAIN_URL = "http://safteycheckin.cloudapp.net";
+        public const string DOMAIN_URL = "http://safetycheckin.cloudapp.net";
 
 
         protected void Application_Start()
