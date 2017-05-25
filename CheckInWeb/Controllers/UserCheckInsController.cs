@@ -38,6 +38,12 @@ namespace CheckInWeb.Controllers
             return View();
         }
 
+        // GET: UserCheckIns/Create
+        public ActionResult French()
+        {
+            return View();
+        }
+
         // POST: UserCheckIns/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
@@ -82,7 +88,48 @@ namespace CheckInWeb.Controllers
 
             return View(userCheckIn);
         }
-        
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult French([Bind(Include = "ID,firstName,lastName,telNum,email,contactEmail1,contactEmail2,contactEmail3,contactEmail4,location,returnTime,message,subscribe")] UserCheckIn userCheckIn)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    DateTime localNow = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.Local);
+
+                    // roll-over to the next day if the return time is earlier than the current time
+                    if (userCheckIn.returnTime.CompareTo(localNow) < 0)
+                    {
+                        userCheckIn.returnTime = userCheckIn.returnTime.AddDays(1);
+                    }
+
+                    // convert local time to UTC
+                    userCheckIn.returnTime = TimeZoneInfo.ConvertTimeToUtc(userCheckIn.returnTime, TimeZoneInfo.Local);
+
+                    userCheckIn.secString = GetSecurityString();
+                    db.UserCheckIns.Add(userCheckIn);
+                    db.SaveChanges();
+
+                    if (userCheckIn.subscribe)
+                    {
+                        subscribe(userCheckIn);
+                    }
+
+                    sendEmail(userCheckIn);
+                }
+                catch (Exception e)
+                {
+                    ModelState.AddModelError("Key already exists.", e);
+                }
+
+                return RedirectToAction("PostPage");
+            }
+
+            return View(userCheckIn);
+        }
+
         // Subscribes the user to our newsletter
         private void subscribe(UserCheckIn userCheckIn)
         {   

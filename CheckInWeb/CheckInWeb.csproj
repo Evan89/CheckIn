@@ -203,6 +203,7 @@
     <Content Include="Views\UserCheckIns\Delete.cshtml" />
     <Content Include="Views\UserCheckIns\Index.cshtml" />
     <Content Include="Views\UserCheckIns\PostPage.cshtml" />
+    <Content Include="Views\UserCheckIns\French.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
