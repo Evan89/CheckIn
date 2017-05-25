@@ -4488,7 +4488,9 @@ textarea.input-group-sm > .input-group-btn > .btn {
 .navbar-default .navbar-link:hover {
   color: #333333;
 }
-
+.test {
+    color: #4D74B0;
+}
 .navbar-inverse {
     background-color: #4D74B0;
     border-color: #080808;
