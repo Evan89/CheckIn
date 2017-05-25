@@ -86,7 +86,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.returnTime, "Return Time",htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.returnTime, "Return Time eg 1:45 PM",htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.returnTime, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.returnTime, "", new { @class = "text-danger" })
