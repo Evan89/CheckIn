@@ -97,14 +97,16 @@
         <dd>
             @Html.DisplayFor(model => model.message)
         </dd>
+        <dt>
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                    <br />
+                    <input type="submit" value="Check-In" class="btn btn-default form-actions no-color " />
+            }
+        </dt>
+        <dd>
 
     </dl>
 
-    @using (Html.BeginForm()) {
-        @Html.AntiForgeryToken()
-
-        <div class="form-actions no-color">
-            <input type="submit" value="Check-In" class="btn btn-default" /> |
-        </div>
-    }
 </div>

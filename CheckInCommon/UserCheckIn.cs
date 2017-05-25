@@ -10,7 +10,7 @@ namespace CheckInCommon
     {
         
         [Key]
-        public int ID { get; set; }
+        public long ID { get; set; }
         
         [Required(ErrorMessage = "First name is required.")]
         [StringLength(20)]
@@ -36,12 +36,15 @@ namespace CheckInCommon
         [DataType(DataType.EmailAddress)]
         public string contactEmail1 { get; set; }
 
+        [DisplayFormat(NullDisplayText = "None")]
         [DataType(DataType.EmailAddress)]
         public string contactEmail2 { get; set; }
 
+        [DisplayFormat(NullDisplayText = "None")]
         [DataType(DataType.EmailAddress)]
         public string contactEmail3 { get; set; }
 
+        [DisplayFormat(NullDisplayText = "None")]
         [DataType(DataType.EmailAddress)]
         public string contactEmail4 { get; set; }
 

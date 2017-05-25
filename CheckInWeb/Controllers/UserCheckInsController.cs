@@ -182,7 +182,7 @@ namespace CheckInWeb.Controllers
         }
 
         // GET: UserCheckIns/Delete/5/<Security String>
-        public ActionResult Delete(int? id, string sec)
+        public ActionResult Delete(long? id, string sec)
         {
             if (id == null || sec == null)
             {
@@ -202,7 +202,7 @@ namespace CheckInWeb.Controllers
         // POST: UserCheckIns/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(long id)
         {
             UserCheckIn userCheckIn = db.UserCheckIns.Find(id);
             db.UserCheckIns.Remove(userCheckIn);
