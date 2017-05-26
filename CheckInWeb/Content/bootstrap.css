@@ -4414,7 +4414,9 @@ textarea.input-group-sm > .input-group-btn > .btn {
   color: #cccccc;
   background-color: transparent;
 }
-
+.test {
+    color: #4D74B0;
+}
 .navbar-default .navbar-toggle {
   border-color: #dddddd;
 }
