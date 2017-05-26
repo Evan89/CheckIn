@@ -58,11 +58,15 @@
     <Folder Include="CheckInWebContent\" />
     <Folder Include="CheckInWorker2Content\" />
     <Folder Include="CheckInWorkerContent\" />
+    <Folder Include="Profiles" />
   </ItemGroup>
   <ItemGroup>
     <DiagnosticsConfiguration Include="CheckInWebContent\diagnostics.wadcfgx" />
     <DiagnosticsConfiguration Include="CheckInWorker2Content\diagnostics.wadcfgx" />
     <DiagnosticsConfiguration Include="CheckInWorkerContent\diagnostics.wadcfgx" />
+  </ItemGroup>
+  <ItemGroup>
+    <PublishProfile Include="Profiles\SafetyCheckInProduction.azurePubxml" />
   </ItemGroup>
   <!-- Import the target files for this project template -->
   <PropertyGroup>

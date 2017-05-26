@@ -17,6 +17,8 @@ namespace CheckInWeb.Controllers
 {
     public class UserCheckInsController : Controller
     {
+        public const string URL = "http://safetycheckin.cloudapp.net/UserCheckIns/Delete/";
+
         private CheckInContext db = new CheckInContext();
 
         // GET: UserCheckIns
@@ -58,6 +60,7 @@ namespace CheckInWeb.Controllers
                     // roll-over to the next day if the return time is earlier than the current time
                     if (userCheckIn.returnTime.CompareTo(localNow) < 0)
                     {
+
                         userCheckIn.returnTime = userCheckIn.returnTime.AddDays(1);
                     }
 
@@ -139,7 +142,7 @@ namespace CheckInWeb.Controllers
             // Create a new NameValueCollection instance to hold some custom parameters to be posted to the URL.
             NameValueCollection myNameValueCollection = new NameValueCollection();
 
-            //First Name and yes they gave us those fucking values to use
+            //First Name and yes they gave us those values to use
             myNameValueCollection.Add("82512_109811pi_82512_109811", userCheckIn.firstName);
 
             //Last Name
@@ -226,7 +229,7 @@ namespace CheckInWeb.Controllers
         }
 
         // GET: UserCheckIns/Delete/5/<Security String>
-        public ActionResult Delete(int? id, string sec)
+        public ActionResult Delete(long? id, string sec)
         {
             if (id == null || sec == null)
             {
@@ -246,7 +249,7 @@ namespace CheckInWeb.Controllers
         // POST: UserCheckIns/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(long id)
         {
             UserCheckIn userCheckIn = db.UserCheckIns.Find(id);
             db.UserCheckIns.Remove(userCheckIn);

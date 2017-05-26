@@ -15,7 +15,7 @@ using System.Net.Mail;
 
 namespace CheckInWorker
 {
-    
+
 
     public class WorkerRole : RoleEntryPoint
     {
@@ -71,6 +71,7 @@ namespace CheckInWorker
 
         private async Task RunAsync(CancellationToken cancellationToken)
         {
+            
             CheckInContext db = new CheckInContext();
 
             while (!cancellationToken.IsCancellationRequested)
@@ -84,15 +85,17 @@ namespace CheckInWorker
                 foreach (UserCheckIn checkIn in expiredCheckIns)
                 {
                     sendMissingEmail(checkIn);
-                    db.UserCheckIns.Remove(checkIn);               
+                    db.UserCheckIns.Remove(checkIn);
                     db.SaveChanges();
                 }
 
                 await Task.Delay(checkEvery * 1000);
             }
+           
 
 
         }
+
 
         // Sends an email notifying the emergency contacts that the user has failed to check-in
         private void sendMissingEmail(UserCheckIn userCheckIn)
@@ -116,7 +119,7 @@ namespace CheckInWorker
                 mailMessage.To.Add(userCheckIn.contactEmail4);
             }
 
-            mailMessage.Subject = userCheckIn.firstName + " " + userCheckIn.lastName + " has not checked back in from " + userCheckIn.location ;
+            mailMessage.Subject = userCheckIn.firstName + " " + userCheckIn.lastName + " has not checked back in from " + userCheckIn.location;
             mailMessage.IsBodyHtml = true;
             mailMessage.Body = "Hello <br/> <br/>"
                 + "This is to inform you that " + userCheckIn.firstName + " " + userCheckIn.lastName

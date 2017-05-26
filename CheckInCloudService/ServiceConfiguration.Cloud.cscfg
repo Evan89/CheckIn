@@ -3,16 +3,17 @@
   <Role name="CheckInWeb">
     <Instances count="1" />
     <ConfigurationSettings>
-      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="UseDevelopmentStorage=true" />
-      <Setting name="StorageConnectionString" value="UseDevelopmentStorage=true" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="DefaultEndpointsProtocol=https;AccountName=safetycheckin;AccountKey=5A10DsUbQqWibTthmBGySglfq+/mye7wjJg9NccLk72AMwR5Jdlx3VmCtaFIFB9z2mF6ibwtC3siUd8XX8wxpw==" />
+      <Setting name="StorageConnectionString" value="DefaultEndpointsProtocol=https;AccountName=safetycheckin;AccountKey=5A10DsUbQqWibTthmBGySglfq+/mye7wjJg9NccLk72AMwR5Jdlx3VmCtaFIFB9z2mF6ibwtC3siUd8XX8wxpw==" />
+      <Setting name="APPINSIGHTS_INSTRUMENTATIONKEY" value="e804cc7e-087a-44d9-aee6-71fe8b99c0ab" />
     </ConfigurationSettings>
   </Role>
   <Role name="CheckInWorker">
     <Instances count="1" />
     <ConfigurationSettings>
-      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="UseDevelopmentStorage=true" />
-      <Setting name="StorageConnectionString" value="UseDevelopmentStorage=true" />
-      <Setting name="CheckInDbConnectionString" value="Data Source=(localdb)\MSSQLLocalDB; Initial Catalog=CheckIn; Integrated Security=True; MultipleActiveResultSets=True;" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="DefaultEndpointsProtocol=https;AccountName=safetycheckin;AccountKey=5A10DsUbQqWibTthmBGySglfq+/mye7wjJg9NccLk72AMwR5Jdlx3VmCtaFIFB9z2mF6ibwtC3siUd8XX8wxpw==" />
+      <Setting name="StorageConnectionString" value="DefaultEndpointsProtocol=https;AccountName=safetycheckin;AccountKey=5A10DsUbQqWibTthmBGySglfq+/mye7wjJg9NccLk72AMwR5Jdlx3VmCtaFIFB9z2mF6ibwtC3siUd8XX8wxpw==" />
+      <Setting name="CheckInDbConnectionString" value="Server=tcp:safetycheckin.database.windows.net,1433;Initial Catalog=CheckInDB;Persist Security Info=False;User ID=tsunamisolutionscheckin;Password=BCITHorchata17;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;" />
     </ConfigurationSettings>
   </Role>
 </ServiceConfiguration>
