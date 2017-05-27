@@ -125,7 +125,7 @@ namespace CheckInWorker
                 + "This is to inform you that " + userCheckIn.firstName + " " + userCheckIn.lastName
                 + " has left you as an emergency contact. <br/>"
                 + userCheckIn.firstName + " was expected to check in at "
-                + TimeZoneInfo.ConvertTimeFromUtc(userCheckIn.returnTime, TimeZoneInfo.Local);
+                + userCheckIn.inputTime;
 
             if (userCheckIn.message != null)
             {

@@ -10,7 +10,6 @@ namespace CheckInCommon.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
-            ContextKey = "CheckInCommon.CheckInContext";
         }
 
         protected override void Seed(CheckInCommon.CheckInContext context)

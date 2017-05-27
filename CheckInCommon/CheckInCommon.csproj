@@ -66,6 +66,18 @@
     <Compile Include="Migrations\201705252032399_int2long.Designer.cs">
       <DependentUpon>201705252032399_int2long.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201705260012408_UTCStuff.cs" />
+    <Compile Include="Migrations\201705260012408_UTCStuff.Designer.cs">
+      <DependentUpon>201705260012408_UTCStuff.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705260338115_UTCStuff1.cs" />
+    <Compile Include="Migrations\201705260338115_UTCStuff1.Designer.cs">
+      <DependentUpon>201705260338115_UTCStuff1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705260626550_CalculatedUTC.cs" />
+    <Compile Include="Migrations\201705260626550_CalculatedUTC.Designer.cs">
+      <DependentUpon>201705260626550_CalculatedUTC.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserCheckIn.cs" />
@@ -86,6 +98,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201705252032399_int2long.resx">
       <DependentUpon>201705252032399_int2long.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705260012408_UTCStuff.resx">
+      <DependentUpon>201705260012408_UTCStuff.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705260338115_UTCStuff1.resx">
+      <DependentUpon>201705260338115_UTCStuff1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705260626550_CalculatedUTC.resx">
+      <DependentUpon>201705260626550_CalculatedUTC.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

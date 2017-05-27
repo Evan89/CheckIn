@@ -10,7 +10,7 @@ namespace CheckInCommon
     {
         
         [Key]
-        public long ID { get; set; }
+        public int ID { get; set; }
         
         [Required(ErrorMessage = "First name is required.")]
         [StringLength(20)]
@@ -52,7 +52,8 @@ namespace CheckInCommon
         [StringLength(20)]
         public string location { get; set; }
 
-        [Required(ErrorMessage = "Return time is required.")]
+        public string inputTime { get; set; }
+        
         [DataType(DataType.Time)]
         public DateTime returnTime { get; set; }
 

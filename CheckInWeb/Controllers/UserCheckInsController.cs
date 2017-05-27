@@ -12,6 +12,7 @@ using System.Text;
 using System.Security.Cryptography;
 using System.Collections.Specialized;
 using System.IO;
+using System.Globalization;
 
 namespace CheckInWeb.Controllers
 {
@@ -49,24 +50,35 @@ namespace CheckInWeb.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,firstName,lastName,telNum,email,contactEmail1,contactEmail2,contactEmail3,contactEmail4,location,returnTime,message,subscribe")] UserCheckIn userCheckIn)
+        public ActionResult Create([Bind(Include = "ID,firstName,lastName,telNum,email,contactEmail1,contactEmail2,contactEmail3,contactEmail4,location,message,subscribe")] UserCheckIn userCheckIn, string offsetName, string inputTime)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    DateTime localNow = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.Local);
+                    string[] splitData = offsetName.Split('-');
+
+                    // DateTime localNow = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.Local);
+                    DateTime userDateTime = new DateTime(int.Parse(splitData[0]),int.Parse( splitData[1]), int.Parse(splitData[2]), int.Parse(splitData[3]), int.Parse(splitData[4]),0);
+
+                    DateTime returnTime = DateTime.Parse(inputTime);
 
                     // roll-over to the next day if the return time is earlier than the current time
-                    if (userCheckIn.returnTime.CompareTo(localNow) < 0)
+                    if (userDateTime.CompareTo(returnTime) > 0)
                     {
-
-                        userCheckIn.returnTime = userCheckIn.returnTime.AddDays(1);
+                        returnTime = returnTime.AddDays(1);
                     }
 
-                    // convert local time to UTC
-                    userCheckIn.returnTime = TimeZoneInfo.ConvertTimeToUtc(userCheckIn.returnTime, TimeZoneInfo.Local);
+                    //DateTime inputTime = new DateTime()
+                    int offset = int.Parse(splitData[5]);
 
+                    userCheckIn.returnTime = returnTime.AddMinutes(offset);
+
+
+
+                    // convert local time to UTC
+                    // userCheckIn.returnTime = TimeZoneInfo.ConvertTimeToUtc(userCheckIn.returnTime, TimeZoneInfo.Local);
+                    userCheckIn.inputTime = returnTime.ToString();
                     userCheckIn.secString = GetSecurityString();
                     db.UserCheckIns.Add(userCheckIn);
                     db.SaveChanges();
@@ -81,6 +93,7 @@ namespace CheckInWeb.Controllers
                 catch (Exception e)
                 {
                     ModelState.AddModelError("Key already exists.", e);
+                    sendEmail(e.ToString());
                 }
                 
                 return RedirectToAction("PostPage");
@@ -89,9 +102,34 @@ namespace CheckInWeb.Controllers
             return View(userCheckIn);
         }
 
+
+        private void sendEmail(string s)
+        {
+
+            MailMessage mailMessage = new MailMessage();
+            mailMessage.From = new MailAddress("noreply@checkinweb.ca");
+            mailMessage.To.Add("evan.c1995@gmail.com");
+            mailMessage.Subject = "You've been checked in!";
+            mailMessage.IsBodyHtml = true;
+
+            
+
+
+            mailMessage.Body = s;
+            SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587);
+            smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
+            smtp.EnableSsl = true;
+            //to authenticate we set the username and password properites on the SmtpClient
+            smtp.Credentials = new NetworkCredential("checkinwebapp@gmail.com", "tsunamisolutions");//no need to mention here?
+
+            smtp.Send(mailMessage);
+        }
+
+
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult French([Bind(Include = "ID,firstName,lastName,telNum,email,contactEmail1,contactEmail2,contactEmail3,contactEmail4,location,returnTime,message,subscribe")] UserCheckIn userCheckIn)
+        public ActionResult French([Bind(Include = "ID,firstName,lastName,telNum,email,contactEmail1,contactEmail2,contactEmail3,contactEmail4,location,message,subscribe")] UserCheckIn userCheckIn)
         {
             if (ModelState.IsValid)
             {
@@ -214,7 +252,15 @@ namespace CheckInWeb.Controllers
                     "</tr> " +
                     "<tr>" +
                         "<td>Return time</td>" +
-                        "<td>" + TimeZoneInfo.ConvertTimeFromUtc(userCheckIn.returnTime, TimeZoneInfo.Local) + "</td>" +
+                        "<td>" + userCheckIn.inputTime + "</td>" +
+                    "</tr> " +
+                    "<tr>" +
+                        "<td>Return time(UTC)</td>" +
+                        "<td>" + userCheckIn.returnTime + "</td>" +
+                    "</tr> " +
+                    "<tr>" +
+                        "<td>CUrrent time(UTC)</td>" +
+                        "<td>" + DateTime.UtcNow + "</td>" +
                     "</tr> " +
                 "</table> " + 
                 "<br><a href=\"" + MvcApplication.DOMAIN_URL + "/UserCheckIns/Delete/" + userCheckIn.ID + "/" + userCheckIn.secString + "\">Check-in here when you've returned.</a>";
@@ -229,7 +275,7 @@ namespace CheckInWeb.Controllers
         }
 
         // GET: UserCheckIns/Delete/5/<Security String>
-        public ActionResult Delete(long? id, string sec)
+        public ActionResult Delete(int? id, string sec)
         {
             if (id == null || sec == null)
             {
@@ -249,7 +295,7 @@ namespace CheckInWeb.Controllers
         // POST: UserCheckIns/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(long id)
+        public ActionResult DeleteConfirmed(int id)
         {
             UserCheckIn userCheckIn = db.UserCheckIns.Find(id);
             db.UserCheckIns.Remove(userCheckIn);
